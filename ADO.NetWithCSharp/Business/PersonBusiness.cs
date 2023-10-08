@@ -6,17 +6,15 @@ namespace ADO.NetWithCSharp.Business;
 
 public class PersonBusiness
 {
-    const string connectionString = "Server=.;Database=YourDatabaseName;User Id=YourUsername;Password=YourPassword;Integrated Security=True";
+    //const string connectionString = "Server=.;Database=YourDatabaseName;User Id=YourUsername;Password=YourPassword;Integrated Security=True";
+    const string connectionString = "Data Source=185.159.153.40,1433;Initial Catalog=drpharms_LearningCsharp;Persist Security Info=False;User ID=drpharms_LearningCsharp;Password=Le@rning_1234$;MultipleActiveResultSets=True;";
 
     public List<Person> GetPeople()
     {
         List<Person> people = new List<Person>();
 
-        // Replace these values with your actual database connection details
-        string connectionString = "";
-
         // Replace "YourTableName" with the actual name of the table you want to query
-        string tableName = "YourTableName";
+        string tableName = "drpharms_LearningCsharp.Person";
 
         using (SqlConnection connection = new SqlConnection(connectionString))
         {
@@ -25,7 +23,7 @@ public class PersonBusiness
                 connection.Open();
 
                 // Create a SQL command to select data from the table
-                string query = $"SELECT FirstName, LastName, PhoneNumber FROM {tableName}";
+                string query = $"SELECT Id,FirstName, LastName, PhoneNumber FROM {tableName}";
                 SqlCommand command = new SqlCommand(query, connection);
 
                 // Create a data reader to fetch the data
@@ -36,6 +34,7 @@ public class PersonBusiness
                 {
                     Person person = new Person
                     {
+                        Id = (int)reader["Id"],
                         FirstName = reader["FirstName"].ToString(),
                         LastName = reader["LastName"].ToString(),
                         PhoneNumber = reader["PhoneNumber"].ToString()
@@ -58,7 +57,7 @@ public class PersonBusiness
         }
     }
 
-    static bool InsertPerson(Person person)
+    public bool InsertPerson(Person person)
     {
         using (SqlConnection connection = new SqlConnection(connectionString))
         {
@@ -66,14 +65,15 @@ public class PersonBusiness
             {
                 connection.Open();
 
-                string tableName = "YourTableName";
+                string tableName = "drpharms_LearningCsharp.Person";
 
                 // Create a SQL command to insert a new person record
-                string query = $"INSERT INTO {tableName} (FirstName, LastName, PhoneNumber) " +
-                               "VALUES (@FirstName, @LastName, @PhoneNumber)";
+                string query = $"INSERT INTO {tableName} (Id,FirstName, LastName, PhoneNumber) " +
+                               "VALUES (@Id,@FirstName, @LastName, @PhoneNumber)";
                 SqlCommand command = new SqlCommand(query, connection);
 
                 // Add parameters to the SQL command
+                command.Parameters.AddWithValue("@Id", person.Id);
                 command.Parameters.AddWithValue("@FirstName", person.FirstName);
                 command.Parameters.AddWithValue("@LastName", person.LastName);
                 command.Parameters.AddWithValue("@PhoneNumber", person.PhoneNumber);
