@@ -37,6 +37,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.callApiButton = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.PeopleGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -48,6 +49,8 @@
             this.PeopleGridView.RowTemplate.Height = 25;
             this.PeopleGridView.Size = new System.Drawing.Size(637, 302);
             this.PeopleGridView.TabIndex = 0;
+            this.PeopleGridView.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.PeopleGridView_CellEnter);
+            this.PeopleGridView.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.PeopleGridView_RowEnter);
             // 
             // firstNameTextBox
             // 
@@ -109,19 +112,30 @@
             // 
             // callApiButton
             // 
-            this.callApiButton.Location = new System.Drawing.Point(255, 95);
+            this.callApiButton.Location = new System.Drawing.Point(255, 9);
             this.callApiButton.Name = "callApiButton";
-            this.callApiButton.Size = new System.Drawing.Size(154, 29);
+            this.callApiButton.Size = new System.Drawing.Size(202, 51);
             this.callApiButton.TabIndex = 8;
             this.callApiButton.Text = "Call Api";
             this.callApiButton.UseVisualStyleBackColor = true;
             this.callApiButton.Click += new System.EventHandler(this.callApiButton_Click_1);
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(255, 66);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(202, 58);
+            this.button2.TabIndex = 9;
+            this.button2.Text = "Call Api Async";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(661, 444);
+            this.Controls.Add(this.button2);
             this.Controls.Add(this.callApiButton);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label3);
@@ -150,5 +164,6 @@
         private Label label3;
         private Button button1;
         private Button callApiButton;
+        private Button button2;
     }
 }

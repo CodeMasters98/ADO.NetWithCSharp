@@ -8,6 +8,11 @@ namespace ADO.NetWithCSharp
 {
     public partial class Form1 : Form
     {
+        public delegate void ButtonClickEventHandler(object sender, EventArgs e);
+
+        // Define the custom event using the delegate type
+        public event ButtonClickEventHandler ButtonClicked;
+
         public Form1()
         {
             InitializeComponent();
@@ -18,8 +23,10 @@ namespace ADO.NetWithCSharp
             PeopleGridView.DataSource = null;
             PeopleGridView.DataSource = people;
             PeopleGridView.Refresh();
-        }
 
+            // Subscribe to the custom event
+            ButtonClicked += Form1_ButtonClicked;
+        }
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -66,6 +73,51 @@ namespace ADO.NetWithCSharp
                 PeopleGridView.Refresh();
             }
             ClearForm();
+        }
+
+        private void PeopleGridView_RowEnter(object sender, DataGridViewCellEventArgs e)
+        {
+        }
+
+        private void PeopleGridView_CellEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            int x = 0;
+        }
+
+        private async void button2_Click(object sender, EventArgs e)
+        {
+            var options = new RestClientOptions("https://reqres.in");
+            var client = new RestClient(options);
+            var request = new RestRequest("/api/users?page=2", Method.Get);
+            var response = await client.ExecuteAsync(request);
+
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                ReqresApiResponse result = JsonConvert.DeserializeObject<ReqresApiResponse>(response.Content);
+
+                // Assuming PeopleGridView is a DataGridView
+                PeopleGridView.Invoke((Action)(() =>
+                {
+                    PeopleGridView.DataSource = null;
+                    PeopleGridView.DataSource = result.data;
+                    PeopleGridView.Refresh();
+                }));
+            }
+
+            ClearForm();
+        }
+
+        // Method to raise the custom event
+        protected virtual void OnButtonClicked(EventArgs e)
+        {
+            // Check if there are subscribers to the event
+            ButtonClicked?.Invoke(this, e);
+        }
+
+        private void Form1_ButtonClicked(object sender, EventArgs e)
+        {
+            // Handle the custom event
+            label1.Text = "Button Clicked!";
         }
     }
 }
