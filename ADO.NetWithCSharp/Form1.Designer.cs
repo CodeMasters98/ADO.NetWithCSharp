@@ -36,6 +36,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
+            this.callApiButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.PeopleGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -106,11 +107,22 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // callApiButton
+            // 
+            this.callApiButton.Location = new System.Drawing.Point(255, 95);
+            this.callApiButton.Name = "callApiButton";
+            this.callApiButton.Size = new System.Drawing.Size(154, 29);
+            this.callApiButton.TabIndex = 8;
+            this.callApiButton.Text = "Call Api";
+            this.callApiButton.UseVisualStyleBackColor = true;
+            this.callApiButton.Click += new System.EventHandler(this.callApiButton_Click_1);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(661, 444);
+            this.Controls.Add(this.callApiButton);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -137,5 +149,6 @@
         private Label label2;
         private Label label3;
         private Button button1;
+        private Button callApiButton;
     }
 }

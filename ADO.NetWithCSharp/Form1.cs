@@ -1,5 +1,7 @@
 using ADO.NetWithCSharp.Business;
 using ADO.NetWithCSharp.Models;
+using Newtonsoft.Json;
+using RestSharp;
 using System;
 
 namespace ADO.NetWithCSharp
@@ -17,6 +19,7 @@ namespace ADO.NetWithCSharp
             PeopleGridView.DataSource = people;
             PeopleGridView.Refresh();
         }
+
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -46,6 +49,23 @@ namespace ADO.NetWithCSharp
             firstNameTextBox.Text = null;
             lastNameTextBox.Text = null;
             phoneNumberTextBox.Text = null;
+        }
+
+        private void callApiButton_Click_1(object sender, EventArgs e)
+        {
+            var options = new RestClientOptions("https://reqres.in");
+            var client = new RestClient(options);
+            var request = new RestRequest("/api/users?page=2", Method.Get);
+            RestResponse response = client.Execute(request);
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                ReqresApiResponse result = JsonConvert.DeserializeObject<ReqresApiResponse>(response.Content);
+
+                PeopleGridView.DataSource = null;
+                PeopleGridView.DataSource = result.data;
+                PeopleGridView.Refresh();
+            }
+            ClearForm();
         }
     }
 }
